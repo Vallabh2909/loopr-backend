@@ -8,6 +8,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const config_1 = require("../config");
 const authenticate = (req, res, next) => {
     const token = req.cookies.accessToken;
+    console.log("Token :", token);
     if (!token)
         return res.status(401).json({ message: 'Unauthorized' });
     // jwt.verify(token, process.env.ACCESS_TOKEN_SECRET!, (err: jwt.VerifyErrors | null, decoded: jwt.JwtPayload | string | undefined) => {
