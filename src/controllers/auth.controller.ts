@@ -31,8 +31,8 @@ export const login = async (req: Request, res: Response) => {
     return res.status(401).json({ message: 'Invalid credentials' });
   }
   const tokens = generateTokens(user._id.toString());
-  res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
-  res.cookie('accessToken', tokens.accessToken, { httpOnly: true, secure: true, sameSite: 'strict', maxAge: 15 * 60 * 1000 });
+  res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 7 * 24 * 60 * 60 * 1000});
+  res.cookie('accessToken', tokens.accessToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 15 * 60 * 1000 });
   res.json({ message: 'Login successful' });
 };
 
@@ -53,8 +53,8 @@ export const refreshToken = (req: Request, res: Response) => {
     if (err) return res.status(403).json({ message: 'Forbidden' });
     const { userId } = decoded as TokenPayload;
     const tokens = generateTokens(userId);
-    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'strict' });
-    res.cookie('accessToken', tokens.accessToken, { httpOnly: true, secure: true, sameSite: 'strict', maxAge: 15 * 60 * 1000 });
+    res.cookie('refreshToken', tokens.refreshToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 7 * 24 * 60 * 60 * 1000 });
+    res.cookie('accessToken', tokens.accessToken, { httpOnly: true, secure: true, sameSite: 'none', maxAge: 15 * 60 * 1000 });
     res.json({ message: 'Token refreshed' });
   });
 };
